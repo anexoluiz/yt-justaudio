@@ -138,6 +138,8 @@
           qualityArray[qualityArray.length - 1].click();
           toogleAudioOnly('0');
         }
+        // Close the 1080p premium bitrate popup
+        document.querySelector('ytd-offline-promo-renderer button[aria-label="Agora não"]')?.click();
       });
     }, 100);
   });
