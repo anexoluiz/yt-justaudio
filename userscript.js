@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         YT Just Audio
-// @version      0.10
+// @version      0.11
 // @description  Hide the video to optimize performance
 // @author       Luiz
 // @match        *://*.youtube.com/*
