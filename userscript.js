@@ -8,8 +8,10 @@
 // ==/UserScript==
 
 (() => {
-  const svgOff = '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%;"><path d="M12 4v9.38c-.73-.84-1.8-1.38-3-1.38-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V8h6V4h-7zM9 19c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm9-12h-5V5h5v2z" fill="#fff"></path></svg>';
-  const svgOn = '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%;"><path d="M12 4v9.38c-.73-.84-1.8-1.38-3-1.38-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V8h6V4h-7z" fill="#f00"></path></svg>';
+  const svgOff =
+    '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%;"><path d="M12 4v9.38c-.73-.84-1.8-1.38-3-1.38-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V8h6V4h-7zM9 19c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm9-12h-5V5h5v2z" fill="#fff"></path></svg>';
+  const svgOn =
+    '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%;"><path d="M12 4v9.38c-.73-.84-1.8-1.38-3-1.38-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V8h6V4h-7z" fill="#f00"></path></svg>';
   function toogleAudioOnly(set, cookie = true) {
     if (set === '1') {
       document.querySelector('#audio_only_style').innerHTML = '#player #container video { display: none; }';
@@ -106,18 +108,6 @@
           if (brightness > 125) {
           button.style.filter = 'invert(100%)';
           } */
-
-      if (!cookieStore) return;
-      cookieStore.addEventListener('change', (e) => {
-        const changedaudio_only = e.changed.find((item) => item.name === 'audio_only');
-        if (changedaudio_only) {
-          const audioOnlyValue = document.cookie
-            .split(';')
-            .filter((item) => item.trim().startsWith('audio_only='))[0]
-            .split('=')[1];
-          toogleAudioOnly(audioOnlyValue, false);
-        }
-      });
       document.addEventListener('visibilitychange', async () => {
         const settingsToogle = await waitForElements('.ytp-settings-button');
         settingsToogle[0].click();
@@ -140,6 +130,17 @@
         }
         // Close the 1080p premium bitrate popup
         document.querySelector('ytd-offline-promo-renderer button[aria-label="Agora não"]')?.click();
+      });
+      if (!cookieStore) return;
+      cookieStore.addEventListener('change', (e) => {
+        const changedaudio_only = e.changed.find((item) => item.name === 'audio_only');
+        if (changedaudio_only) {
+          const audioOnlyValue = document.cookie
+            .split(';')
+            .filter((item) => item.trim().startsWith('audio_only='))[0]
+            .split('=')[1];
+          toogleAudioOnly(audioOnlyValue, false);
+        }
       });
     }, 100);
   });
